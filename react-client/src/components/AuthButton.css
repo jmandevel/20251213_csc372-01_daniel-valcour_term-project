@@ -1,0 +1,50 @@
+.auth-button-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--c-border);
+}
+
+.user-name {
+  font-size: var(--font-size-small);
+  color: var(--c-text);
+}
+
+.auth-button {
+  padding: 6px 12px;
+  border: 1px solid var(--c-border);
+  border-radius: 4px;
+  background: var(--c-bg);
+  color: var(--c-text);
+  cursor: pointer;
+  font-size: var(--font-size-small);
+  transition: all 0.2s;
+}
+
+.auth-button:hover {
+  background: var(--c-bg-hover);
+  border-color: var(--c-accent);
+}
+
+.login-button {
+  background: var(--c-accent);
+  color: white;
+  border: none;
+}
+
+.login-button:hover {
+  background: var(--c-accent);
+  opacity: 0.85;
+}

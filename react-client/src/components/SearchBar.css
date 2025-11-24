@@ -1,0 +1,42 @@
+/* SearchBar Component */
+.SearchBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 4px 0;
+}
+
+.SearchBar-input {
+  width: min(600px, 60vw);
+  padding: 8px 12px;
+  font-size: var(--font-size-large);
+  background-color: var(--c-surface);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+.SearchBar-confusable-input {
+  width: 200px;
+  padding: 12px 14px;
+  font-size: var(--font-size-small);
+  background-color: var(--c-surface);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+.SearchBar-button {
+  padding: 8px 14px;
+  font-size: 16px;
+  background-color: var(--c-surface);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+.SearchBar-search-button {
+  padding: 8px 14px;
+  font-size: 16px;
+  background-color: var(--c-accent);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}

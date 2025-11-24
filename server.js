@@ -1,0 +1,52 @@
+require('dotenv').config();
+const express = require('express');
+const session = require('express-session');
+const cors = require('cors');
+const passport = require('./auth/passport');
+const glyphRoutes = require('./routes/glyphRoutes');
+const authRoutes = require('./routes/authRoutes');
+const favoriteRoutes = require('./routes/favoriteRoutes');
+const { initializeCache } = require('./controllers/glyphController');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+const CLIENT_BASE_URL = process.env.CLIENT_BASE_URL || 'http://localhost:5173';
+
+app.use(cors({
+  origin: CLIENT_BASE_URL,
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use('/auth', authRoutes);
+app.use('/api/favorites', favoriteRoutes);
+app.use(glyphRoutes);
+
+app.get('/debug-auth', (req, res) => {
+  console.log('req.user:', req.user);
+  console.log('req.isAuthenticated type:', typeof req.isAuthenticated);
+  const isAuth = (typeof req.isAuthenticated === 'function') ? req.isAuthenticated() : !!req.user;
+  console.log('isAuthenticated():', isAuth);
+  res.json({ user: req.user ? { id: req.user.id, displayName: req.user.displayName } : null, isAuthenticated: isAuth });
+});
+
+app.listen(PORT, async () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+  await initializeCache();
+});
+

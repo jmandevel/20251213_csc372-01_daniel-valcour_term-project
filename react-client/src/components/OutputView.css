@@ -1,0 +1,276 @@
+.OutputView {
+  border: 1px solid var(--c-border);
+  padding: 10px;
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.OutputView .table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.OutputView .table-container::-webkit-scrollbar {
+  display: none;
+}
+
+.OutputView .data-table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid var(--c-border);
+  table-layout: fixed;
+}
+
+.OutputView thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.OutputView thead th {
+  border: 1px solid var(--c-border);
+  outline: none;
+}
+
+.OutputView thead tr.table-header-row {
+  background-color: var(--c-bg);
+  border-bottom: 2px solid var(--c-border);
+  color: var(--c-text);
+}
+
+.OutputView thead tr.subheader-row {
+  background-color: var(--c-bg);
+  border-bottom: 2px solid var(--c-border);
+  color: var(--c-text);
+}
+
+.OutputView th,
+.OutputView td {
+  border: 1px solid var(--c-border);
+  box-sizing: border-box;
+  padding: 6px 8px;
+}
+
+.OutputView th {
+  text-align: left;
+  font-size: var(--font-size-small);
+  color: var(--c-text);
+}
+
+.OutputView thead th {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.OutputView th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.OutputView th.sortable:hover {
+  background-color: var(--c-border);
+}
+
+.OutputView th.center {
+  text-align: center;
+}
+
+.OutputView td {
+  padding: 2px 4px;
+  font-size: var(--font-size-small);
+  color: var(--c-text);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.OutputView tr.data-row {
+  border-bottom: 1px solid var(--c-border);
+  height: auto;
+}
+
+.favorite-cell {
+  cursor: pointer;
+  text-align: center;
+  padding: 4px;
+  user-select: none;
+}
+
+.star {
+  font-size: 1.2em;
+  color: var(--c-border);
+  transition: color 0.2s;
+}
+
+.star.favorited {
+  color: var(--c-accent);
+}
+
+.favorite-cell:hover .star {
+  color: var(--c-accent);
+  opacity: 0.7;
+}
+.OutputView tbody tr:nth-child(odd),
+.OutputView tbody tr:nth-child(even) {
+  background-color: var(--c-surface);
+}
+
+.OutputView .mono {
+  font-family: monospace;
+}
+
+.OutputView .char-cell {
+  font-size: var(--font-size-large);
+  text-align: center;
+  min-width: 50px;
+}
+
+.OutputView .char-cell.clickable {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.OutputView .char-cell.clickable:hover {
+  background-color: var(--c-accent);
+}
+
+.OutputView .flag-cell {
+  padding: 0 2px;
+  text-align: center;
+  font-size: var(--font-size-small);
+  width: 42px;
+  min-width: 42px;
+}
+
+.OutputView .group-header {
+  text-align: center;
+}
+
+.OutputView .Pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+ .copy-tooltip {
+  position: fixed;
+  background: var(--c-bg);
+  color: var(--c-text);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: var(--font-size-small);
+  z-index: 1000;
+  pointer-events: none;
+ }
+
+.OutputView .Pager input {
+  width: 100px;
+  padding: 2px;
+  background-color: var(--c-surface);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+.OutputView .Pager button {
+  background-color: var(--c-surface);
+  color: var(--c-text);
+  border: 1px solid var(--c-border);
+}
+
+.OutputView .Pager button:hover:not(:disabled) {
+  border-color: var(--c-accent);
+}
+
+.OutputView .Pager button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.OutputView .Pager .glyph-range {
+  margin-left: 12px;
+  color: var(--c-text);
+  font-size: 13px;
+}
+
+.OutputView .Pager span {
+  color: var(--c-text);
+}
+
+.ColumnSelector {
+  background-color: var(--c-bg);
+  border: 1px solid var(--c-border);
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.ColumnSelector h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: var(--c-text);
+}
+
+.ColumnSelector-option {
+  display: inline-block;
+  margin-right: 16px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: var(--c-text);
+  cursor: pointer;
+}
+
+.show-more-container {
+  margin-top: 12px;
+}
+
+.show-more-button {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.copy-tooltip {
+  position: fixed;
+  background-color: var(--c-accent);
+  color: var(--c-text);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -120%);
+  animation: fadeOut 0.6s ease-in-out forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.clickable-cell {
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.clickable-cell:hover {
+  background-color: var(--c-accent) !important;
+}
+
+.OutputView .col-codepoint { width: 80px; }
+.OutputView .col-unicode-id { width: 90px; }
+.OutputView .col-char { width: 60px; }
+.OutputView .col-name { width: 250px; }
+.OutputView .col-flag { width: 42px; }
+.OutputView .col-case-cp { width: 60px; }
+.OutputView .col-case-uid { width: 80px; }
+.OutputView .col-case-char { width: 60px; }

@@ -1,0 +1,42 @@
+.ColumnSelector {
+  font-size: var(--font-size-small);
+  color: var(--c-text);
+  background: var(--c-background);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  align-items: center;
+  text-align: center;
+}
+
+.ColumnSelector-list {
+  font-size: var(--font-size-small);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ColumnSelector-list li {
+  padding: 0.25em 0.5em;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ColumnSelector-list li:hover {
+  background: var(--c-bg);
+}
+
+.ColumnSelector-actions {
+  display: flex;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.ColumnSelector-actions button {
+  font-size: var(--font-size-small);
+}
