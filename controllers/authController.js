@@ -12,13 +12,7 @@ function oauthCallback(req, res) {
 async function getMe(req, res) {
   try {
     if (req.isAuthenticated && req.isAuthenticated()) {
-      const googleId = req.user.id;
-      const user = await userModel.getUserById(googleId);
-      if (user) {
-        res.json(user);
-      } else {
-        res.status(404).json({ message: 'User not found' });
-      }
+      res.json(req.user);
     } else {
       res.status(401).json({ message: 'Not authenticated' });
     }
