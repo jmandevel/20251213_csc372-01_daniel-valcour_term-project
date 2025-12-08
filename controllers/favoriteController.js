@@ -33,19 +33,13 @@ async function addFavorite(req, res) {
 // remove a favorite codepoint for user
 async function removeFavorite(req, res) {
   try {
-    const userId = req.user.id;
     const codepoint = parseInt(req.params.codepoint);
 
     if (isNaN(codepoint)) {
       return res.status(400).json({ error: 'Invalid codepoint' });
     }
 
-    const userRecord = await userModel.getUserById(userId);
-    if (!userRecord) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    await favoriteModel.removeFavorite(userRecord.id, codepoint);
+    await favoriteModel.removeFavorite(req.user.id, codepoint);
     res.json({ success: true });
   } catch (error) {
     console.error('Error removing favorite:', error);
