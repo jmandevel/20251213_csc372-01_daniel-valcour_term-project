@@ -15,8 +15,6 @@ passport.use(
       const newUser = {
         googleId: profile.id,
         displayName: profile.displayName,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
         email: profile.emails[0].value,
       };
       
