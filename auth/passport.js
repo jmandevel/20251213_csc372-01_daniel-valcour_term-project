@@ -37,9 +37,12 @@ passport.serializeUser((user, done) => {
 // deserialize user for session management
 passport.deserializeUser(async (id, done) => {
   try {
+    console.log('Deserializing user ID:', id);
     const user = await userModel.getUserById(id);
+    console.log('User found:', user ? 'Yes' : 'No');
     done(null, user);
   } catch (error) {
+    console.error('Deserialize error:', error);
     done(error);
   }
 });
