@@ -168,7 +168,8 @@ function UnicodeExplorer() {
     useEffect(() => {
         async function initializeData() {
             try {
-                const [scriptsRes, categoriesRes, classesRes, versionsRes, decompositionTypesRes] = await Promise.all([
+                console.log('Fetching initial data from:', API_BASE_URL);
+                const responses = await Promise.all([
                     fetch(`${API_BASE_URL}/api/scripts`),
                     fetch(`${API_BASE_URL}/api/categories`),
                     fetch(`${API_BASE_URL}/api/classes`),
@@ -176,13 +177,16 @@ function UnicodeExplorer() {
                     fetch(`${API_BASE_URL}/api/decomposition-types`)
                 ]);
 
-                const [scriptsData, categoriesData, classesData, versionsData, decompositionTypesData] = await Promise.all([
-                    scriptsRes.json(),
-                    categoriesRes.json(),
-                    classesRes.json(),
-                    versionsRes.json(),
-                    decompositionTypesRes.json()
-                ]);
+                for (const res of responses) {
+                    if (!res.ok) {
+                        const text = await res.text();
+                        throw new Error(`API Error ${res.status} ${res.url}: ${text.substring(0, 100)}`);
+                    }
+                }
+
+                const [scriptsData, categoriesData, classesData, versionsData, decompositionTypesData] = await Promise.all(
+                    responses.map(res => res.json())
+                );
 
                 const fetchedScripts = scriptsData.scripts || [];
                 const fetchedCategories = categoriesData.categories || [];
