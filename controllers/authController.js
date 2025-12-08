@@ -11,10 +11,6 @@ function oauthCallback(req, res) {
 // get current authenticated user info
 async function getMe(req, res) {
   try {
-    console.log('Session ID:', req.sessionID);
-    console.log('User in request:', req.user);
-    console.log('Is Authenticated:', req.isAuthenticated());
-
     if (req.isAuthenticated && req.isAuthenticated()) {
       res.json(req.user);
     } else {
