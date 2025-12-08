@@ -441,6 +441,19 @@ function UnicodeExplorer() {
         }
     }
 
+    async function handleLogout() {
+        try {
+            await fetch(`${API_BASE_URL}/auth/logout`, {
+                method: 'POST',
+                credentials: 'include'
+            });
+            setUser(null);
+            setFavorites([]);
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
+    }
+
     return (
         <div className="UnicodeExplorer">
             {serverError ? (
@@ -454,7 +467,7 @@ function UnicodeExplorer() {
                             showFilters={showFilters}
                             onToggleFilters={handleOpenFilters}
                         />
-                        <AuthButton />
+                        <AuthButton user={user} onLogout={handleLogout} />
                     </div>
                     <FilterOptions
                         filters={tempFilters}
