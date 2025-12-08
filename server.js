@@ -28,8 +28,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.set('trust proxy', 1);
-
 app.use(session({
   store: new pgSession({
     pool: pool,
@@ -42,7 +40,6 @@ app.use(session({
   proxy: true,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000
   }
