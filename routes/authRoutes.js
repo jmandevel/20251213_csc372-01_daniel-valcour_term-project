@@ -34,7 +34,15 @@ router.get(
     keepSessionInfo: true,
     failureRedirect: `${CLIENT_BASE_URL}/login`,
   }),
-  require('../controllers/authController').oauthCallback
+  (req, res, next) => {
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return next(err);
+      }
+      require('../controllers/authController').oauthCallback(req, res);
+    });
+  }
 );
 
 // get current authenticated user info
