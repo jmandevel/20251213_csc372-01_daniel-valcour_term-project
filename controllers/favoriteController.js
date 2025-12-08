@@ -5,12 +5,7 @@ const userModel = require('../models/userModel');
 // get list of user's favorite codepoints
 async function getFavorites(req, res) {
   try {
-    const userId = req.user.id;
-    const userRecord = await userModel.getUserById(userId);
-    if (!userRecord) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    const favorites = await favoriteModel.getUserFavorites(userRecord.id);
+    const favorites = await favoriteModel.getUserFavorites(req.user.id);
     res.json({ favorites });
   } catch (error) {
     console.error('Error getting favorites:', error);
@@ -21,19 +16,13 @@ async function getFavorites(req, res) {
 // add a new favorite codepoint for user
 async function addFavorite(req, res) {
   try {
-    const userId = req.user.id;
     const { codepoint } = req.body;
 
     if (!codepoint && codepoint !== 0) {
       return res.status(400).json({ error: 'Codepoint is required' });
     }
 
-    const userRecord = await userModel.getUserById(userId);
-    if (!userRecord) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    const favorite = await favoriteModel.addFavorite(userRecord.id, codepoint);
+    const favorite = await favoriteModel.addFavorite(req.user.id, codepoint);
     res.json({ success: true, favorite });
   } catch (error) {
     console.error('Error adding favorite:', error);
