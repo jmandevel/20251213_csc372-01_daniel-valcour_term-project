@@ -414,30 +414,47 @@ function UnicodeExplorer() {
         
         const isFavorited = favorites.includes(codepoint);
         
+        setFavorites(prev => {
+            if (isFavorited) {
+                return prev.filter(cp => cp !== codepoint);
+            } else {
+                return [...prev, codepoint];
+            }
+        });
+        
         try {
             if (isFavorited) {
-                await fetch(`${API_BASE_URL}/api/favorites/${codepoint}`, {
+                const res = await fetch(`${API_BASE_URL}/api/favorites/${codepoint}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
-                setFavorites(favorites.filter(cp => cp !== codepoint));
+                if (!res.ok) throw new Error('Failed to delete');
+
                 if (filters && filters.favorited === 'has') {
                     setRefreshKey(k => k + 1);
                 }
             } else {
-                await fetch(`${API_BASE_URL}/api/favorites`, {
+                const res = await fetch(`${API_BASE_URL}/api/favorites`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ codepoint }),
                     credentials: 'include'
                 });
-                setFavorites([...favorites, codepoint]);
+                if (!res.ok) throw new Error('Failed to add');
+
                 if (filters && filters.favorited === 'not') {
                     setRefreshKey(k => k + 1);
                 }
             }
         } catch (error) {
             console.error('Error toggling favorite:', error);
+            setFavorites(prev => {
+                if (isFavorited) {
+                    return [...prev, codepoint];
+                } else {
+                    return prev.filter(cp => cp !== codepoint);
+                }
+            });
         }
     }
 
