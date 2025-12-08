@@ -6,7 +6,7 @@ import AuthButton from './AuthButton';
 import './UnicodeExplorer.css';
 
 // determine API base URL from environment variable or default to localhost
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.PROD ? '' : (import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:3000');
 
 // main component for exploring Unicode characters (all other components are children of this)
 function UnicodeExplorer() {

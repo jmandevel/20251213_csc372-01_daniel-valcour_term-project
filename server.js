@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const path = require('path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./models/db');
@@ -54,6 +55,13 @@ app.get('/debug-auth', (req, res) => {
   const isAuth = (typeof req.isAuthenticated === 'function') ? req.isAuthenticated() : !!req.user;
   console.log('isAuthenticated():', isAuth);
   res.json({ user: req.user ? { id: req.user.id, displayName: req.user.displayName } : null, isAuthenticated: isAuth });
+});
+
+app.use(express.static(path.join(__dirname, 'react-client/dist')));
+
+// get requrest to get the frontend index.html file
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'react-client/dist/index.html'));
 });
 
 app.listen(PORT, async () => {

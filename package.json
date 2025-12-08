@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "build": "npm install --prefix react-client && npm run build --prefix react-client",
     "seed": "node seed/seed.js"
   },
   "dependencies": {

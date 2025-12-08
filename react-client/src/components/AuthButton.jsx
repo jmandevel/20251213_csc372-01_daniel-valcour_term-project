@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import './AuthButton.css';
 
 // determine API base URL from environment variable or default to localhost
-const API_BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:3000';
+const API_BASE_URL = import.meta.env.PROD ? '' : (import.meta.env.VITE_BACKEND_API_BASE_URL || 'http://localhost:3000');
 
 // component to handle user authentication
 function AuthButton() {
