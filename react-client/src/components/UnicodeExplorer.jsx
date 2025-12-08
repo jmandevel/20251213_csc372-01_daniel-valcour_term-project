@@ -449,6 +449,11 @@ function UnicodeExplorer() {
             });
             setUser(null);
             setFavorites([]);
+            if (filters.favorited) {
+                const newFilters = { ...filters };
+                delete newFilters.favorited;
+                setFilters(newFilters);
+            }
         } catch (error) {
             console.error('Error logging out:', error);
         }
