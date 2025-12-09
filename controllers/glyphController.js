@@ -51,6 +51,7 @@ async function getCharacters(req, res) {
   const pageRaw = req.query.page;
   const sortColumn = req.query.sort || 'codepoint';
   const sortDirection = req.query.dir === 'desc' ? 'desc' : 'asc';
+  let similarityTerm = null;
 
   // page number to present to user
   let page = Number.isFinite(Number(pageRaw)) ? parseInt(pageRaw, 10) : 0;
@@ -208,11 +209,12 @@ async function getCharacters(req, res) {
         if (nameForCp) {
           searchCond = `(lower(c.name) % lower($${paramIndex}))`;
           values.push(nameForCp);
-          term = nameForCp;
+          similarityTerm = nameForCp;
           paramIndex++;
         } else {
           searchCond = `(lower(c.name) % lower($${paramIndex}) OR c.code ILIKE $${paramIndex + 1})`;
           values.push(term, `%${term}%`);
+          similarityTerm = term;
           paramIndex += 2;
         }
         conditions.push(searchCond);
@@ -303,7 +305,7 @@ async function getCharacters(req, res) {
     }
 
     const whereClause = conditions.join(' AND ');
-    const result = await glyphModel.queryCharacters(conditions.join(' AND '), values, page, sortColumn, sortDirection, term);
+    const result = await glyphModel.queryCharacters(conditions.join(' AND '), values, page, sortColumn, sortDirection, similarityTerm);
     res.json(result);
   } catch (error) {
     console.error('Error querying characters:', error);
