@@ -2,4 +2,4 @@
 
 Glyphs Online is an interactive website for working with unicode characters.
 
-https://uncg-my.sharepoint.com/:v:/g/personal/davalcou_uncg_edu/IQAQ5ybGijVSQ7Ck7JgIw4-IAQMokqxJ94GA4aVTULjvujw?nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&e=fS35AR
+Live Site: https://glyphs-online-server.onrender.com/
