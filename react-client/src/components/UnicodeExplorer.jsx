@@ -320,8 +320,12 @@ function UnicodeExplorer() {
         initializeData();
     }, []);
 
-    function handleOpenFilters() {
-        setTempFilters(filters);
+    function handleOpenFilters(currentSearchText) {
+        const newFilters = { ...filters };
+        if (typeof currentSearchText === 'string') {
+            newFilters.search = currentSearchText;
+        }
+        setTempFilters(newFilters);
         setShowFilters(true);
     }
 

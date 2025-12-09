@@ -25,7 +25,7 @@ function SearchBar({ value = '', onSearch, showFilters, onToggleFilters }) {
         onKeyDown={(e) => { if (e.key === 'Enter') handleSubmit(); }}
       />
       <button className="SearchBar-search-button" onClick={handleSubmit}>Search</button>
-      <button className="SearchBar-button" onClick={onToggleFilters}>Filters</button>
+      <button className="SearchBar-button" onClick={() => onToggleFilters(text)}>Filters</button>
     </div>
   );
 }
