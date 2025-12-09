@@ -206,12 +206,13 @@ async function getCharacters(req, res) {
         }
 
         if (nameForCp) {
-          searchCond = `(c.name ILIKE $${paramIndex})`;
-          values.push(`%${nameForCp}%`);
+          searchCond = `(lower(c.name) % lower($${paramIndex}))`;
+          values.push(nameForCp);
+          term = nameForCp;
           paramIndex++;
         } else {
-          searchCond = `(c.name ILIKE $${paramIndex} OR c.code ILIKE $${paramIndex + 1})`;
-          values.push(`%${term}%`, `%${term}%`);
+          searchCond = `(lower(c.name) % lower($${paramIndex}) OR c.code ILIKE $${paramIndex + 1})`;
+          values.push(term, `%${term}%`);
           paramIndex += 2;
         }
         conditions.push(searchCond);
@@ -302,11 +303,11 @@ async function getCharacters(req, res) {
     }
 
     const whereClause = conditions.join(' AND ');
-    const result = await glyphModel.queryCharacters(whereClause, values, page, sortColumn, sortDirection);
+    const result = await glyphModel.queryCharacters(conditions.join(' AND '), values, page, sortColumn, sortDirection, term);
     res.json(result);
   } catch (error) {
     console.error('Error querying characters:', error);
-    res.status(500).json({ error: 'Failed to fetch characters' });
+    res.status(500).json({ error: 'Failed to query characters' });
   }
 }
 

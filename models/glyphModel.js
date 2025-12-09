@@ -92,7 +92,7 @@ async function getCharacterByCodepoint(codepoint) {
   return result.rows[0];
 }
 // query characters with optional filtering, pagination, and sorting
-async function queryCharacters(whereClause, values, page = 0, sortColumn = 'codepoint', sortDirection = 'asc') {
+async function queryCharacters(whereClause, values, page = 0, sortColumn = 'codepoint', sortDirection = 'asc', term = null) {
   const offset = page * 256;
   
   const whereSQL = whereClause ? `WHERE ${whereClause}` : '';
@@ -100,12 +100,22 @@ async function queryCharacters(whereClause, values, page = 0, sortColumn = 'code
   const columnMap = {
     'codepoint': 'c.codepoint',
     'unicodeId': 'c.codepoint',
-    'name': 'c.name'
+    'name': 'c.name',
+    'similarity': 'similarity'
   };
   
   const dbColumn = columnMap[sortColumn] || 'c.codepoint';
-  const direction = sortDirection === 'desc' ? 'DESC' : 'ASC';
-  const orderByClause = `ORDER BY ${dbColumn} ${direction}, c.codepoint ${direction}`;
+  
+  let orderByClause;
+  if (sortColumn === 'similarity' && term) {
+    values.push(term);
+    const termIndex = values.length;
+    const direction = sortDirection === 'desc' ? 'DESC' : 'ASC';
+    orderByClause = `ORDER BY (lower(c.name) <-> lower($${termIndex})) ${direction}, c.codepoint ASC`;
+  } else {
+    const direction = sortDirection === 'desc' ? 'DESC' : 'ASC';
+    orderByClause = `ORDER BY ${dbColumn} ${direction}, c.codepoint ${direction}`;
+  }
   
   const countQuery = `SELECT COUNT(*) FROM characters c ${whereSQL}`;
   const countResult = await pool.query(countQuery, values);

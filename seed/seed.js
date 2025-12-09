@@ -59,6 +59,8 @@ async function main() {
 
     console.log('Creating database tables...');
     
+    await client.query('CREATE EXTENSION IF NOT EXISTS pg_trgm;');
+
     await client.query(`
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
@@ -204,6 +206,7 @@ async function main() {
     }
 
     console.log('Creating indexes...');
+    await client.query(`CREATE INDEX IF NOT EXISTS idx_characters_name_trgm ON characters USING gin(lower(name) gin_trgm_ops);`);
     await client.query(`CREATE INDEX IF NOT EXISTS idx_characters_general_category ON characters(general_category);`);
     await client.query(`CREATE INDEX IF NOT EXISTS idx_characters_script ON characters(script);`);
     await client.query(`CREATE INDEX IF NOT EXISTS idx_characters_properties_gin ON characters USING gin(properties);`);

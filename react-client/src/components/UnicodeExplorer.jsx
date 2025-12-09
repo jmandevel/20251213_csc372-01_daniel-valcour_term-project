@@ -333,6 +333,10 @@ function UnicodeExplorer() {
         setFilters(tempFilters);
         setPage(0);
         setShowFilters(false);
+        if (tempFilters.search && tempFilters.search.trim() !== '') {
+            setSortColumn('similarity');
+            setSortDirection('asc');
+        }
     }
 
     function handleTempFilterChange(newFilters) {
@@ -484,7 +488,14 @@ function UnicodeExplorer() {
                     <div className="header-row">
                         <SearchBar
                             value={filters.search}
-                            onSearch={(term) => { setFilters({ ...filters, search: term }); setPage(0); }}
+                            onSearch={(term) => { 
+                                setFilters({ ...filters, search: term }); 
+                                setPage(0); 
+                                if (term && term.trim() !== '') {
+                                    setSortColumn('similarity');
+                                    setSortDirection('asc');
+                                }
+                            }}
                             showFilters={showFilters}
                             onToggleFilters={handleOpenFilters}
                         />
