@@ -105,10 +105,14 @@ async function queryCharacters(whereClause, values, page = 0, sortColumn = 'code
   };
   
   const dbColumn = columnMap[sortColumn] || 'c.codepoint';
+
+  const countQuery = `SELECT COUNT(*) FROM characters c ${whereSQL}`;
+  const countResult = await pool.query(countQuery, values);
+  const totalCount = parseInt(countResult.rows[0].count, 10);
   
   let orderByClause;
-  if (sortColumn === 'similarity' && term) {
-    values.push(term);
+  if (sortColumn === 'similarity' && similarityTerm) {
+    values.push(similarityTerm);
     const termIndex = values.length;
     const direction = sortDirection === 'desc' ? 'DESC' : 'ASC';
     orderByClause = `ORDER BY (lower(c.name) <-> lower($${termIndex})) ${direction}, c.codepoint ASC`;
@@ -116,10 +120,6 @@ async function queryCharacters(whereClause, values, page = 0, sortColumn = 'code
     const direction = sortDirection === 'desc' ? 'DESC' : 'ASC';
     orderByClause = `ORDER BY ${dbColumn} ${direction}, c.codepoint ${direction}`;
   }
-  
-  const countQuery = `SELECT COUNT(*) FROM characters c ${whereSQL}`;
-  const countResult = await pool.query(countQuery, values);
-  const totalCount = parseInt(countResult.rows[0].count, 10);
   
   // mega query to get character details along with computed properties
   const query = `
