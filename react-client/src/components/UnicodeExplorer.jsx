@@ -337,6 +337,9 @@ function UnicodeExplorer() {
         if (tempFilters.search && tempFilters.search.trim() !== '') {
             setSortColumn('similarity');
             setSortDirection('asc');
+        } else {
+            setSortColumn('codepoint');
+            setSortDirection('asc');
         }
     }
 
@@ -494,6 +497,9 @@ function UnicodeExplorer() {
                                 setPage(0); 
                                 if (term && term.trim() !== '') {
                                     setSortColumn('similarity');
+                                    setSortDirection('asc');
+                                } else {
+                                    setSortColumn('codepoint');
                                     setSortDirection('asc');
                                 }
                             }}
