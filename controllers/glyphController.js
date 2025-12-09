@@ -11,19 +11,10 @@ let DECOMPOSITION_TYPES = [];
 async function initializeCache() {
   try {
     SCRIPTS = await glyphModel.getAllScripts();
-    console.log(`Loaded ${SCRIPTS.length} scripts from database`);
-
     CATEGORIES = await glyphModel.getAllCategories();
-    console.log(`Loaded ${CATEGORIES.length} categories from database`);
-
     CLASSES = await glyphModel.getAllClasses();
-    console.log(`Loaded ${CLASSES.length} classes from database`);
-
     VERSIONS = await glyphModel.getAllVersions();
-    console.log(`Loaded ${VERSIONS.length} versions from database`);
-
     DECOMPOSITION_TYPES = await glyphModel.getAllDecompositionTypes();
-    console.log(`Loaded ${DECOMPOSITION_TYPES.length} decomposition types from database`);
   } catch (error) {
     console.error('Error initializing cache:', error);
   }

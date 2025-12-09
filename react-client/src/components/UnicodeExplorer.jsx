@@ -168,7 +168,6 @@ function UnicodeExplorer() {
     useEffect(() => {
         async function initializeData() {
             try {
-                console.log('Fetching initial data from:', API_BASE_URL);
                 const responses = await Promise.all([
                     fetch(`${API_BASE_URL}/api/scripts`),
                     fetch(`${API_BASE_URL}/api/categories`),

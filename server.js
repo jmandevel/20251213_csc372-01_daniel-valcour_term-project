@@ -22,19 +22,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// log all incoming requests
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  next();
-});
-
 app.use(session({
   store: new pgSession({
     pool: pool,
     tableName: 'session',
     createTableIfMissing: true
   }),
-  secret: process.env.SESSION_SECRET || 'your-secret-key-change-this',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   proxy: true,
@@ -51,14 +45,6 @@ app.use(passport.session());
 app.use('/auth', authRoutes);
 app.use('/api/favorites', favoriteRoutes);
 app.use(glyphRoutes);
-
-app.get('/debug-auth', (req, res) => {
-  console.log('req.user:', req.user);
-  console.log('req.isAuthenticated type:', typeof req.isAuthenticated);
-  const isAuth = (typeof req.isAuthenticated === 'function') ? req.isAuthenticated() : !!req.user;
-  console.log('isAuthenticated():', isAuth);
-  res.json({ user: req.user ? { id: req.user.id, displayName: req.user.displayName } : null, isAuthenticated: isAuth });
-});
 
 app.use(express.static(path.join(__dirname, 'react-client/dist')));
 
