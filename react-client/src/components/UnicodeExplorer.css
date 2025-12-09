@@ -29,3 +29,9 @@
   gap: 16px;
   margin-bottom: 10px;
 }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

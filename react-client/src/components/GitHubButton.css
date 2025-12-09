@@ -1,0 +1,15 @@
+.github-button:hover {
+  background: var(--c-bg-hover);
+  border-color: var(--c-accent);
+}
+
+.github-button {
+  background: var(--c-accent);
+  color: white;
+  border: none;
+}
+
+.github-button:hover {
+  background: var(--c-accent);
+  opacity: 0.85;
+}

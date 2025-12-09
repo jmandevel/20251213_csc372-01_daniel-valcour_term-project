@@ -3,6 +3,7 @@ import FilterOptions from './FilterOptions';
 import SearchBar from './SearchBar';
 import OutputView from './OutputView';
 import AuthButton from './AuthButton';
+import GitHubButton from './GitHubButton';
 import './UnicodeExplorer.css';
 
 // determine API base URL from environment variable or default to localhost
@@ -499,7 +500,10 @@ function UnicodeExplorer() {
                             showFilters={showFilters}
                             onToggleFilters={handleOpenFilters}
                         />
-                        <AuthButton user={user} onLogout={handleLogout} />
+                        <div className="header-actions">
+                            <AuthButton user={user} onLogout={handleLogout} />
+                            <GitHubButton />
+                        </div>
                     </div>
                     <FilterOptions
                         filters={tempFilters}
