@@ -18,15 +18,17 @@ function GitHubButton() {
       .catch(err => console.error('Failed to fetch GitHub issues:', err));
   }, []);
 
+  const handleClick = () => {
+    window.open(REPO_URL, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <a 
-      href={REPO_URL} 
-      target="_blank" // open in new tab
-      rel="noopener noreferrer" // dont allow data to pass to new page
+    <button
+      onClick={handleClick}
       className="github-button"
     >
       GitHub Repository {issueCount !== null ? `(${issueCount} Issues)` : ''}
-    </a>
+    </button>
   );
 }
 

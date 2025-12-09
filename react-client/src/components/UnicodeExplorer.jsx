@@ -501,8 +501,8 @@ function UnicodeExplorer() {
                             onToggleFilters={handleOpenFilters}
                         />
                         <div className="header-actions">
-                            <AuthButton user={user} onLogout={handleLogout} />
                             <GitHubButton />
+                            <AuthButton user={user} onLogout={handleLogout} />
                         </div>
                     </div>
                     <FilterOptions
