@@ -92,7 +92,7 @@ async function getCharacterByCodepoint(codepoint) {
   return result.rows[0];
 }
 // query characters with optional filtering, pagination, and sorting
-async function queryCharacters(whereClause, values, page = 0, sortColumn = 'codepoint', sortDirection = 'asc', term = null) {
+async function queryCharacters(whereClause, values, page = 0, sortColumn = 'codepoint', sortDirection = 'asc', similarityTerm = null) {
   const offset = page * 256;
   
   const whereSQL = whereClause ? `WHERE ${whereClause}` : '';
